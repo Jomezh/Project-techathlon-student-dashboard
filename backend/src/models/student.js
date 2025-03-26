@@ -3,6 +3,7 @@ const bcrypt = require("bcryptjs");
 
 const studentSchema = new mongoose.Schema({
     _id: {type: String, required: true, unique: true},
+    profilePicture: { type: String },
     name: { type: String, required: true },
     gender:{type: String},
     DoB:{type: Date, required: true},
@@ -10,7 +11,8 @@ const studentSchema = new mongoose.Schema({
     email: { type: String, required: true, unique: true },
     age: { type: Number, required: true },
     semester: {type: Number, required: true},
-    enrolledCourses: [{ type: mongoose.Schema.Types.ObjectId, ref: "Course" }] // Linking to courses
+    enrolledCourses: [{ type: mongoose.Schema.Types.ObjectId, ref: "Course" }], // Linking to courses
+    createdAt: { type: Date, default: Date.now }
 });
 
 UserSchema.pre("save", async function (next) {

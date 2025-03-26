@@ -10,6 +10,7 @@ const EnrollmentSchema = new mongoose.Schema({
     default: "Enrolled" 
   },
   grade: { type: String, default: "N/A" },  // Optional field for grading
+  createdAt: { type: Date, default: Date.now }
 });
 
 module.exports = mongoose.model("Enrollment", EnrollmentSchema);

@@ -10,7 +10,7 @@ const studentSchema = new mongoose.Schema({
     email: { type: String, required: true, unique: true },
     age: { type: Number, required: true },
     semester: {type: Number, required: true},
-    courses: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Course' }] // Linking to courses
+    enrolledCourses: [{ type: mongoose.Schema.Types.ObjectId, ref: "Course" }] // Linking to courses
 });
 
 UserSchema.pre("save", async function (next) {

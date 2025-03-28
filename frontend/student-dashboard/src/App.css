@@ -1,0 +1,874 @@
+/* Reset and Common Styles (Consolidated from all files) */
+* {
+  margin: 0; /* */
+  padding: 0; /* */
+  box-sizing: border-box; /* */
+}
+
+html {
+  /* Smooth scrolling behavior */
+  scroll-behavior: smooth;
+}
+
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* */
+  background-color: #f4f4f4; /* */
+  display: flex; /* */
+  /* Ensure body takes at least viewport height, allows content to push footer */
+  min-height: 100vh;
+  overflow-x: hidden; /* */
+  /* Prevent margin collapse issues */
+  /* margin: 0; */ /* Already handled by '*' reset */
+  /* padding: 0; */ /* Already handled by '*' reset */
+}
+
+/* App layout helper */
+.app-container {
+  display: flex;
+  width: 100%;
+  position: relative; /* For positioning child elements like sidebar/navbar */
+}
+
+/* Main content area adjustments */
+.main-content {
+  flex-grow: 1; /* Allow it to take up remaining space */
+  /* Transition for smooth margin changes */
+  transition: margin-left 0.3s ease; /* */
+  /* Default margin when sidebar is collapsed (matches sidebar width) */
+  margin-left: 60px; /* */
+  /* Space for the fixed navbar */
+  padding-top: 60px; /* */
+  /* Ensure content width adjusts correctly */
+  width: calc(100% - 60px); /* */
+  box-sizing: border-box; /* Include padding in width calculation */
+}
+
+/* Adjust main content margin when sidebar is expanded */
+.app-container.sidebar-expanded .main-content {
+   margin-left: 250px; /* */
+   width: calc(100% - 250px); /* */
+}
+
+
+/* Navigation Bar Styles */
+.navbar {
+  position: fixed; /* */
+  top: 0; /* */
+  right: 0; /* */
+  height: 60px; /* */
+  background-color: white; /* */
+  display: flex; /* */
+  align-items: center; /* */
+  /* Align icons to the right */
+  justify-content: flex-end; /* Changed from flex-start */
+  padding: 0 25px; /* */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* */
+  z-index: 99; /* */
+  /* Transition for smooth left position change */
+  transition: left 0.3s ease; /* */
+  /* Default left position (matches collapsed sidebar width) */
+  left: 60px; /* */
+}
+
+/* Adjust navbar left position when sidebar is expanded */
+.app-container.sidebar-expanded .navbar {
+  left: 250px; /* */
+}
+
+
+.navbar-icons {
+  display: flex; /* */
+  align-items: center; /* */
+}
+
+.navbar-icon {
+  margin-left: 20px; /* */
+  color: #2c3e50; /* */
+  cursor: pointer; /* */
+  position: relative; /* For badge positioning */ /* */
+}
+
+.navbar-icon svg { /* Target react-icons */
+  font-size: 20px; /* */
+  vertical-align: middle; /* Better alignment */
+}
+
+.navbar-icon a { /* Ensure links inherit color and cover icon */
+  color: inherit;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+}
+
+
+.notification-badge {
+  position: absolute; /* */
+  top: -6px; /* Fine-tuned position */ /* */
+  right: -8px; /* Fine-tuned position */ /* */
+  background-color: #e74c3c; /* */
+  color: white; /* */
+  border-radius: 50%; /* */
+  width: 18px; /* */
+  height: 18px; /* */
+  display: flex; /* */
+  align-items: center; /* */
+  justify-content: center; /* */
+  font-size: 10px; /* */
+  font-weight: bold;
+}
+
+/* Sidebar Styles */
+.sidebar {
+  width: 60px; /* Collapsed width */ /* */
+  background: #2c3e50; /* */
+  color: white; /* */
+  height: 100vh; /* Full viewport height */ /* */
+  padding: 20px 10px; /* */
+  position: fixed; /* Fixed position on the left */ /* */
+  left: 0;
+  top: 0;
+  /* Transition for width change */
+  transition: width 0.3s ease; /* */
+  overflow: hidden; /* Hide overflowing content during transition */ /* */
+  border-radius: 0 15px 15px 0; /* Rounded corners on the right */ /* */
+  z-index: 100; /* Ensure sidebar is above content */ /* */
+  display: flex;
+  flex-direction: column; /* Stack hamburger and menu items */
+}
+
+.sidebar.expanded {
+  width: 250px; /* Expanded width */ /* */
+}
+
+.hamburger {
+  cursor: pointer; /* */
+  font-size: 24px; /* */
+  text-align: center; /* */
+  margin-bottom: 20px; /* */
+  padding: 5px;
+  flex-shrink: 0; /* Prevent shrinking */
+}
+
+.menu-options {
+  opacity: 0; /* Hidden when collapsed */ /* */
+  margin-top: 30px; /* */
+  /* Delay opacity transition slightly */
+  transition: opacity 0.2s ease 0.1s; /* */
+  overflow: hidden;
+  white-space: nowrap; /* Prevent text wrapping */
+  flex-grow: 1; /* Allow menu to take remaining space */
+  overflow-y: auto; /* Allow scrolling if menu is too long */
+}
+
+.sidebar.expanded .menu-options {
+  opacity: 1; /* Visible when expanded */ /* */
+}
+
+.menu-item {
+  display: flex; /* */
+  align-items: center; /* */
+  color: white; /* */
+  text-decoration: none; /* */
+  margin: 15px 0; /* */
+  padding: 12px; /* */
+  border-radius: 8px; /* */
+  background: #34495e; /* */
+  /* Transition for background and transform */
+  transition: background-color 0.2s ease, transform 0.2s ease; /* */
+  overflow: hidden; /* Clip content */
+}
+
+.menu-item:hover {
+  background: #3498db; /* */
+  transform: translateX(5px); /* */
+}
+
+/* Style for the active menu item */
+.menu-item.active {
+  background: #3498db; /* Highlight active link */
+  font-weight: bold;
+}
+
+
+.menu-item svg { /* Target react-icons */
+  margin-right: 15px; /* */
+  font-size: 18px; /* */
+  width: 20px; /* Fixed width for alignment */ /* */
+  text-align: center; /* */
+  flex-shrink: 0; /* Prevent icon from shrinking */
+}
+
+.menu-item span {
+  opacity: 0; /* Text hidden when collapsed */
+  transition: opacity 0.2s ease;
+  /* Prevent text selection during transition */
+  user-select: none;
+}
+
+.sidebar.expanded .menu-item span {
+  opacity: 1; /* Text visible when expanded */
+}
+
+
+/* Content Area (within main-content) */
+.content {
+  padding: 25px; /* Default padding */ /* */
+  display: flex; /* Use flexbox for layout */ /* */
+  flex-wrap: wrap; /* Allow items (cards) to wrap */ /* */
+  gap: 25px; /* Spacing between cards */ /* */
+  box-sizing: border-box;
+  width: 100%; /* Take full width of parent (.main-content) */
+}
+
+
+/* Card Styles */
+.card {
+  background: white; /* */
+  padding: 25px; /* */
+  border-radius: 15px; /* */
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08); /* Slightly softer shadow */ /* */
+  /* Transition for hover effects */
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* */
+  /* Flex properties for wrapping layout */
+  flex: 1 1 300px; /* Grow, shrink, basis width */ /* */
+  min-width: 280px; /* Minimum card width */
+  box-sizing: border-box;
+  /* Prevent content from breaking out */
+  overflow: hidden;
+}
+
+.card:hover {
+  transform: translateY(-5px); /* */
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12); /* Enhanced shadow on hover */ /* */
+}
+
+.card h2 { /* Specific styling for page titles within cards */
+  margin-bottom: 20px;
+  color: #2c3e50;
+  border-bottom: 2px solid #f0f0f0;
+  padding-bottom: 10px;
+  font-size: 1.5em;
+}
+
+
+.card h3 { /* Default card section header */
+  margin-bottom: 15px; /* */
+  color: #2c3e50; /* */
+  border-bottom: 2px solid #f0f0f0; /* */
+  padding-bottom: 10px; /* */
+  font-size: 1.2em;
+}
+
+.card h4 { /* Sub-section header */
+   margin-bottom: 12px; /* */
+   margin-top: 15px; /* Space above sub-header */
+   color: #34495e;
+   font-size: 1.0em;
+   font-weight: 600; /* Slightly bolder */
+}
+
+.clickable-card {
+  cursor: pointer; /* Indicate clickability */
+}
+
+/* Profile Card Specific (Dashboard View) */
+.card.profile {
+  display: flex; /* */
+  align-items: center; /* */
+  gap: 20px; /* Space between pic and info */
+}
+
+.card.profile .profile-pic-container {
+  margin-right: 0; /* Remove default margin */ /* */
+  flex-shrink: 0; /* Prevent picture from shrinking */
+}
+
+
+.profile-placeholder {
+  /* Base styles for placeholder */
+  border-radius: 50%; /* */
+  background: #3498db; /* */
+  color: white; /* */
+  display: flex; /* */
+  align-items: center; /* */
+  justify-content: center; /* */
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15); /* Subtle shadow */ /* */
+
+  /* Dashboard Size */
+  width: 80px; /* */
+  height: 80px; /* */
+  font-size: 30px; /* */
+}
+
+.profile-info { /* Text container on dashboard profile card */
+   flex-grow: 1; /* Allow text to take remaining space */
+}
+
+.profile-info p {
+  margin: 6px 0; /* Adjusted margin */ /* */
+  font-size: 0.95em; /* Slightly smaller font */ /* */
+  color: #555;
+}
+
+.profile-info h3 { /* Override card h3 for profile name */
+  border-bottom: none;
+  padding-bottom: 0;
+  margin-bottom: 10px;
+  font-size: 1.4em; /* Larger name */
+}
+
+
+/* Profile Page Specific Styles */
+.profile-page-card .profile-pic-container {
+  display: flex; /* */
+  justify-content: center; /* */
+  margin-bottom: 25px; /* */
+  margin-right: 0;
+}
+
+.profile-page-card .profile-placeholder { /* Larger size for profile page */
+  width: 150px; /* */
+  height: 150px; /* */
+  font-size: 60px; /* */
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2); /* */
+}
+
+.profile-details { /* Centered text below picture on profile page */
+  text-align: center; /* */
+  margin-bottom: 30px; /* Space before grid */
+}
+
+.profile-details h3 {
+  color: #2c3e50; /* */
+  margin-bottom: 5px; /* */
+  border-bottom: none;
+  padding-bottom: 0;
+  font-size: 1.8em; /* Larger name on profile page */
+}
+
+.profile-details p {
+  margin: 4px 0; /* */
+  color: #7f8c8d; /* */
+  font-size: 1.0em;
+}
+
+.details-grid {
+  display: grid; /* */
+  /* Responsive grid: 1 column default, 2 columns on larger screens */
+  grid-template-columns: 1fr;
+  gap: 15px; /* */
+  margin-top: 20px; /* */
+}
+/* Apply 2 columns layout for wider screens */
+@media (min-width: 600px) {
+  .details-grid {
+      grid-template-columns: 1fr 1fr; /* */
+  }
+}
+
+
+.detail-item {
+  background: #f8f9fa; /* */
+  padding: 15px; /* */
+  border-radius: 8px; /* */
+  text-align: center; /* */
+  border: 1px solid #e9ecef; /* Subtle border */
+}
+
+.detail-item-label {
+  color: #7f8c8d; /* */
+  font-size: 0.9em; /* */
+  margin-bottom: 5px; /* */
+  display: block; /* Ensure label is on its own line */
+}
+
+.detail-item-value {
+  color: #2c3e50; /* */
+  font-weight: 600; /* Bolder value */ /* */
+  font-size: 1.0em;
+}
+
+
+/* Academic Summary Styles */
+.metrics-container {
+  display: flex; /* */
+  justify-content: space-around; /* */
+  margin: 25px 0; /* */
+  gap: 15px; /* Add gap for spacing */
+  flex-wrap: wrap; /* Allow metrics to wrap */
+}
+
+.metric {
+  text-align: center; /* */
+  flex: 1; /* Allow metrics to share space */
+  min-width: 80px; /* Minimum width for each metric */
+}
+
+.metric-value {
+  font-size: 28px; /* */
+  font-weight: bold; /* */
+  color: #2c3e50; /* */
+}
+
+.metric-label {
+  font-size: 14px; /* */
+  color: #7f8c8d; /* */
+  margin-top: 5px; /* */
+}
+
+.enrolled-courses { /* Container for course list on dashboard */
+  margin-top: 20px; /* */
+  text-align: left; /* Align course items left */
+}
+
+.course-item { /* Individual course item style */
+  background: #f8f9fa; /* */
+  padding: 10px 15px; /* */
+  margin: 8px 0; /* */
+  border-radius: 8px; /* */
+  border-left: 4px solid #3498db; /* */
+  transition: background-color 0.2s ease; /* */
+  font-size: 0.95em;
+  color: #333;
+}
+
+.course-item:hover {
+  background-color: #e9f7fe; /* */
+}
+
+/* Academic Summary Page Specific Styles */
+.summary-header {
+  display: flex; /* */
+  justify-content: space-between; /* */
+  align-items: center; /* */
+  margin-bottom: 25px; /* */
+  flex-wrap: wrap; /* Allow wrapping on smaller screens */ /* */
+  gap: 15px; /* Space between title and stats if they wrap */
+}
+
+.summary-header h2 {
+  margin: 0; /* Remove default margin */
+  padding: 0; /* Remove default padding */
+  border: none; /* Remove default border */
+  flex-shrink: 0; /* Prevent title from shrinking */
+}
+
+
+.summary-stats {
+  display: flex; /* */
+  gap: 15px; /* */
+  flex-wrap: wrap; /* Allow stats to wrap */
+}
+
+.summary-stat {
+  background: #f8f9fa; /* */
+  padding: 10px 15px; /* */
+  border-radius: 8px; /* */
+  text-align: center; /* */
+  border: 1px solid #e9ecef; /* Subtle border */
+  min-width: 80px; /* Min width for each stat box */
+}
+
+.summary-stat-label {
+  color: #7f8c8d; /* */
+  font-size: 0.9em; /* */
+}
+
+.summary-stat-value {
+  color: #2c3e50; /* */
+  font-weight: bold; /* */
+  font-size: 1.1em; /* */
+  margin-top: 3px;
+}
+
+/* Table Styles (Academic Summary Page) */
+.table-container { /* Wrapper for responsiveness */
+  width: 100%;
+  overflow-x: auto; /* Allow horizontal scrolling on small screens */
+  margin-top: 25px; /* */
+}
+
+table {
+  width: 100%; /* */
+  border-collapse: collapse; /* */
+  /* margin-top: 25px; */ /* Moved to wrapper */ /* */
+  /* display: block; */ /* Remove, use wrapper for overflow */ /* */
+  /* overflow-x: auto; */ /* Remove, use wrapper for overflow */ /* */
+}
+
+th, td {
+  border: 1px solid #ddd; /* */
+  padding: 12px 15px; /* Adjusted padding */ /* */
+  text-align: left; /* */
+  white-space: nowrap; /* Prevent text wrapping */ /* */
+  font-size: 0.95em;
+}
+
+th {
+  background-color: #f2f6fa; /* Lighter header background */ /* */
+  color: #2c3e50; /* */
+  font-weight: 600; /* Bolder header text */
+}
+
+tr:nth-child(even) td { /* Apply background to cells in even rows */
+  background-color: #f9f9f9; /* */
+}
+
+tr:hover td { /* Apply hover background to cells */
+  background-color: #e9f7fe; /* */
+}
+
+
+/* Attendance & Progress Card/Page Specific */
+.chart-container {
+  display: flex; /* */
+  justify-content: center; /* */
+  align-items: center; /* */
+  position: relative; /* For text overlay */ /* */
+  height: 200px; /* Fixed height for chart */ /* */
+  margin-bottom: 25px; /* Space below chart */ /* */
+}
+
+.chart-text { /* Text in the middle of the doughnut chart */
+  position: absolute; /* */
+  font-size: 2em; /* */
+  font-weight: bold; /* */
+  color: #333; /* */
+  /* Centering trick */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none; /* Allow chart tooltips to show */
+}
+
+.progress-container { /* Container for progress bars */
+  margin-top: 25px; /* */
+}
+
+.progress-item { /* Individual progress bar item */
+  margin: 15px 0; /* */
+}
+
+.progress-label { /* Label above progress bar (name + percentage) */
+  display: flex; /* */
+  justify-content: space-between; /* */
+  margin-bottom: 8px; /* */
+  font-size: 0.9em; /* */
+  color: #555;
+}
+.progress-label span:first-child { /* Course name */
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  padding-right: 10px;
+}
+.progress-label span:last-child { /* Percentage */
+  flex-shrink: 0;
+}
+
+.progress-bar { /* Background of the progress bar */
+  height: 10px; /* */
+  background: #e6e6e6; /* */
+  border-radius: 5px; /* */
+  overflow: hidden; /* Clip the fill */ /* */
+}
+
+.progress-fill { /* The moving fill part */
+  height: 100%; /* */
+  background: #3498db; /* */
+  border-radius: 5px; /* */
+  /* Transition for width animation */
+  transition: width 0.8s cubic-bezier(0.25, 0.1, 0.25, 1); /* Smoother ease-out */ /* */
+  width: 0%; /* Start at 0% for animation */
+}
+
+/* Attendance Page Specific Section */
+.overall-attendance-section {
+  margin-bottom: 30px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #eee;
+}
+
+
+.attendance-summary { /* Container for course attendance list */
+  margin-top: 25px; /* */
+  padding-top: 15px; /* */
+  /* border-top: 1px solid #eee; */ /* Separator if needed */ /* */
+}
+
+.course-attendance-item { /* Style for each course attendance line */
+  margin-bottom: 10px; /* */
+  padding: 10px 15px; /* */
+  background-color: #f9f9f9; /* */
+  border-radius: 5px; /* */
+  border-left: 3px solid #5dade2; /* */
+  font-size: 0.95em;
+}
+
+.course-attendance-item p {
+  margin: 0;
+  color: #333;
+}
+.course-attendance-item strong {
+  color: #2c3e50;
+}
+
+
+/* Notifications Card/Page Specific */
+.notifications { /* Container class for notifications list */
+  display: flex; /* */
+  flex-direction: column; /* */
+  gap: 10px; /* Space between notification items */
+}
+
+.notification { /* Individual notification item */
+  padding: 15px; /* */
+  /* margin: 8px 0; */ /* Replaced by gap in parent */ /* */
+  border-radius: 8px; /* */
+  display: flex; /* */
+  align-items: center; /* */
+  transition: transform 0.2s ease, box-shadow 0.2s ease; /* */
+  background-color: white; /* Default background */ /* */
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05); /* */
+  border-left: 4px solid #ccc; /* Default border color */
+}
+
+/* Specific styles for notifications within the dashboard card */
+.card .notifications {
+   gap: 0; /* Remove gap inside card if needed */
+}
+.card .notification {
+  box-shadow: none; /* Remove shadow inside card */
+  background-color: transparent; /* Use card background */
+  padding: 12px 0; /* Adjust padding inside card */
+  margin: 8px 0; /* Restore margin inside card */
+  border-left-width: 4px; /* Ensure border width is consistent */
+}
+
+
+.notification:hover {
+  transform: translateX(3px); /* */
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.08); /* Slightly enhance shadow on hover */
+}
+
+.notification svg { /* Target react-icons */
+  margin-right: 12px; /* */
+  font-size: 18px; /* */
+  flex-shrink: 0; /* Prevent icon shrinking */
+  vertical-align: middle; /* Align icon better with text */
+}
+
+.notification div { /* Text container */
+  flex-grow: 1;
+  font-size: 0.95em;
+  line-height: 1.4; /* Improve readability */
+}
+
+
+/* Notification Type Styles (Consistent across page and card) */
+.notification.warning {
+  border-left-color: #ff9800; /* Amber/Orange border */ /* */
+}
+.card .notification.warning { /* Style when inside a card */
+   background: #ffebee; color: #d32f2f; border-left-color: #d32f2f; /* */
+}
+.notifications-page-card .notification.warning { /* Style when directly on page */
+  background-color: #fff8e1; /* Light yellow background */
+  color: #e65100;
+}
+
+.notification.alert {
+  border-left-color: #2196f3; /* Blue border */ /* */
+}
+.card .notification.alert {
+  background: #fff8e1; color: #ff8f00; border-left-color: #ff8f00; /* */
+}
+.notifications-page-card .notification.alert {
+  background-color: #e3f2fd; /* Light blue background */
+  color: #0d47a1;
+}
+
+.notification.suggestion {
+  border-left-color: #4caf50; /* Green border */ /* */
+}
+.card .notification.suggestion {
+  background: #e8f5e9; color: #388e3c; border-left-color: #388e3c; /* */
+}
+.notifications-page-card .notification.suggestion {
+  background-color: #e8f5e9; /* Light green background */
+  color: #1b5e20;
+}
+
+
+/* Placeholder Page Styles */
+.placeholder-page Card {
+  text-align: center;
+}
+.placeholder-page p {
+  margin-top: 15px;
+  margin-bottom: 20px;
+  color: #555;
+}
+.placeholder-page a {
+  color: #3498db;
+  text-decoration: none;
+  font-weight: 600;
+}
+.placeholder-page a:hover {
+  text-decoration: underline;
+}
+
+
+/* Responsive adjustments */
+@media (max-width: 992px) {
+   /* Adjustments for medium screens if needed */
+}
+
+
+@media (max-width: 768px) {
+  /* Adjust layout for tablets and smaller devices */
+  .content {
+      gap: 20px; /* Reduce gap */
+      padding: 20px; /* Reduce padding */
+  }
+
+  .card {
+      padding: 20px; /* Reduce card padding */
+      flex-basis: calc(50% - 10px); /* Try for 2 columns */
+      min-width: calc(50% - 10px);
+  }
+  /* Force single column if 2 columns is too tight */
+  @media (max-width: 600px) {
+      .card {
+          flex-basis: 100%;
+          min-width: 100%;
+      }
+  }
+
+
+  .card.profile { /* Stack profile items vertically on small screens */
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 15px;
+  }
+
+  .card.profile .profile-pic-container {
+      margin-bottom: 10px;
+  }
+
+  .metrics-container {
+      /* Allow metrics to wrap more easily */
+      /* flex-direction: column; */ /* Optional: Force column layout */
+      gap: 15px;
+      margin: 20px 0;
+  }
+
+  .summary-header {
+      flex-direction: column; /* Stack title and stats */
+      align-items: flex-start; /* Align items left */
+  }
+  .summary-stats {
+      margin-top: 15px; /* Space after title */
+  }
+
+  /* --- Mobile Sidebar/Navbar Interaction --- */
+
+   /* Ensure content doesn't get hidden behind fixed sidebar */
+  .main-content,
+  .app-container.sidebar-expanded .main-content {
+      margin-left: 0 !important; /* Remove left margin */
+      width: 100% !important; /* Use full width */
+      padding-left: 60px; /* Add padding to clear collapsed sidebar */
+      box-sizing: border-box;
+  }
+
+  /* Navbar adjustments for mobile */
+  .navbar,
+  .app-container.sidebar-expanded .navbar {
+       left: 0 !important; /* Navbar always starts from the very left */
+       width: 100%; /* Full width */
+       padding-left: 70px; /* Space for collapsed sidebar hamburger */
+       box-sizing: border-box;
+  }
+
+   /* Sidebar remains fixed, content flows next to it */
+   .sidebar {
+       height: 100%; /* Ensure full height */
+       /* Optional: Consider making sidebar an overlay on mobile */
+       /* position: fixed; top: 0; left: -250px; transition: left 0.3s ease; */
+       /* &.expanded { left: 0; } */
+       /* If overlay, adjust main-content padding/margin */
+   }
+   .sidebar.expanded {
+       /* Ensure expanded sidebar doesn't cause horizontal scroll */
+       max-width: 80%; /* Example width limit */
+   }
+
+}
+
+@media (max-width: 480px) {
+  /* Adjustments for very small screens */
+  body {
+      font-size: 15px; /* Slightly smaller base font */
+  }
+
+  .content {
+      padding: 15px;
+      gap: 15px;
+  }
+
+  .card {
+      padding: 15px;
+      flex-basis: 100%; /* Ensure single column */
+      min-width: 100%;
+  }
+
+  .navbar {
+      padding: 0 15px; /* Reduce navbar padding */
+      padding-left: 65px; /* Adjust for hamburger */
+  }
+  .navbar-icon {
+      margin-left: 15px; /* Reduce space between icons */
+  }
+
+  .profile-placeholder { /* Smaller profile pic */
+      width: 60px;
+      height: 60px;
+      font-size: 24px;
+  }
+  .profile-page-card .profile-placeholder { /* Smaller profile pic on page */
+      width: 100px;
+      height: 100px;
+      font-size: 40px;
+  }
+  .profile-details h3 { font-size: 1.5em; }
+
+  .metric-value { font-size: 24px; }
+  .metric-label { font-size: 13px; }
+
+  .details-grid {
+      grid-template-columns: 1fr; /* Force single column */
+  }
+
+  th, td {
+      padding: 10px 8px; /* Reduce table cell padding */
+      font-size: 0.9em;
+  }
+
+  .notification {
+      padding: 12px;
+  }
+   .notification svg {
+      margin-right: 8px;
+      font-size: 16px;
+   }
+   .notification div {
+      font-size: 0.9em;
+   }
+
+  .chart-container { height: 180px; }
+  .chart-text { font-size: 1.8em; }
+
+}

@@ -10,7 +10,7 @@ const studentSchema = new mongoose.Schema({
     password: { type: String, required: true },
     email: { type: String, required: true, unique: true },
     age: { type: Number, required: true },
-    semester: {type: Number, required: true},
+    semester: {type: Number, required: true},    
     enrolledCourses: [{ type: mongoose.Schema.Types.ObjectId, ref: "Course" }], // Linking to courses
     createdAt: { type: Date, default: Date.now }
 });
